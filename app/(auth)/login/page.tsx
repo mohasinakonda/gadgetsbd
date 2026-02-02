@@ -1,8 +1,34 @@
+"use client"
+
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+
 export default function LoginPage() {
+  const [error, setError] = useState<string | null>(null)
+  const [isPending, startTransition] = useTransition()
+  const router = useRouter()
+
   return <>
     <div className="w-full max-w-[350px] p-6 a-box mb-6">
       <h1 className="text-2xl font-normal mb-4">Sign in</h1>
-      <form action="index.html" method="GET" className="space-y-4">
+      <form action={async (formData) => {
+        startTransition(async () => {
+          setError(null)
+          const email = String(formData.get("email") || "")
+          const password = String(formData.get("password") || "")
+          const result = await signIn("credentials", {
+            email,
+            password,
+            redirect: false
+          })
+          if (result?.error) {
+            setError("Invalid email or password.")
+            return
+          }
+          router.push("/")
+        })
+      }} className="space-y-4">
         <div>
           <label htmlFor="email" className="block text-sm font-bold mb-1">
             Email or mobile phone number
@@ -10,6 +36,7 @@ export default function LoginPage() {
           <input
             type="email"
             id="email"
+            name="email"
             required
             className="w-full px-2 py-1.5 border border-gray-400 rounded-sm outline-none focus:ring-1 focus:ring-amazon-secondary focus:border-amazon-secondary"
           />
@@ -29,13 +56,16 @@ export default function LoginPage() {
           <input
             type="password"
             id="password"
+            name="password"
             required
             className="w-full px-2 py-1.5 border border-gray-400 rounded-sm outline-none focus:ring-1 focus:ring-amazon-secondary focus:border-amazon-secondary"
           />
         </div>
+        {error && <p className="text-xs text-red-600">{error}</p>}
         <button
           type="submit"
-          className="w-full  py-1.5 a-button-primary text-sm font-medium rounded-sm cursor-pointer"
+          disabled={isPending}
+          className="w-full  py-1.5 a-button-primary text-sm font-medium rounded-sm cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
         >
           Sign in
         </button>
@@ -77,7 +107,7 @@ export default function LoginPage() {
     {/* Create Account Button */}
     <div className="w-full max-w-[350px] mb-8">
       <a
-        href="register.html"
+        href="/register"
         className="block w-full py-1.5 border border-gray-400 rounded-sm text-center text-sm hover:bg-gray-50 transition-colors"
       >
         Create your Gadgets BD account

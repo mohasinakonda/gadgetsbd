@@ -1,6 +1,20 @@
-import Image from "next/image";
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
+import { ProductCard } from "@/components/products/product-card";
+import { connectDB } from "@/services/connection";
+import { Product } from "@/types/product";
+import Link from "next/link";
 
-export default function Home() {
+const getProducts = async () => {
+  const response = await fetch(`${process.env.BASE_URL}/api/products`)
+  const data = await response.json()
+  console.log(data)
+  return data.data
+}
+export default async function Home() {
+  await connectDB()
+  const products = await getProducts()
+
   return (
     <main className="flex-1 max-w-[1500px] mx-auto w-full">
       {/* Hero Banner */}
@@ -11,7 +25,7 @@ export default function Home() {
             'url("https://images.unsplash.com/photo-1491933382434-500287f9b54b?q=80&w=2574&auto=format&fit=crop")'
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-amazon-background to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-amazon-background to-transparent" />
       </div>
       {/* Categories & Content Grid */}
       <div className="relative z-10 -mt-32 px-4">
@@ -37,12 +51,12 @@ export default function Home() {
                 className="w-full h-full object-cover mb-1"
               />
             </div>
-            <a
-              href="products.html"
+            <Link
+              href="/products?category=laptops-and-computers"
               className="text-amazon-blue text-sm hover:underline hover:text-red-700 mt-auto"
             >
               See all laptops
-            </a>
+            </Link>
           </div>
           {/* Card 2 */}
           <div className="bg-white p-4 flex flex-col gap-4 shadow-sm z-20">
@@ -53,12 +67,12 @@ export default function Home() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <a
-              href="products.html"
+            <Link
+              href="products?category=smartphones-and-tablets"
               className="text-amazon-blue text-sm hover:underline hover:text-red-700 mt-auto"
             >
               Shop smartphones
-            </a>
+            </Link>
           </div>
           {/* Card 3 */}
           <div className="bg-white p-4 flex flex-col gap-4 shadow-sm z-20">
@@ -69,12 +83,12 @@ export default function Home() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <a
-              href="products.html"
+            <Link
+              href="products?category=audio-and-headphones"
               className="text-amazon-blue text-sm hover:underline hover:text-red-700 mt-auto"
             >
               Shop accessories
-            </a>
+            </Link>
           </div>
           {/* Card 4 (Sign in promo) */}
           <div className="bg-white p-4 flex flex-col gap-4 shadow-sm z-20 justify-between">
@@ -96,129 +110,21 @@ export default function Home() {
         <div className="mt-8 bg-white p-6 shadow-sm">
           <div className="flex items-center gap-2 mb-4">
             <h2 className="text-xl font-bold">Featured Products</h2>
-            <a
-              href="products.html"
+            <Link
+              href="/products"
               className="text-amazon-blue text-sm hover:underline hover:text-red-700"
             >
               View All
-            </a>
+            </Link>
           </div>
           <div className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide">
             {/* Product 1 */}
-            <div className="flex-none w-48">
-              <a href="details.html">
-                <div className="bg-gray-50 h-48 flex items-center justify-center mb-2 p-2">
-                  <img
-                    src="https://images.unsplash.com/photo-1675868374786-3edd36dddf04?w=300"
-                    className="h-full object-cover mix-blend-multiply"
-                  />
-                </div>
-                <div className="text-sm hover:text-amazon-orange text-amazon-blue line-clamp-2">
-                  Apple MacBook Pro M2, 16GB RAM, 512GB SSD
-                </div>
-              </a>
-              <div className="text-xs text-gray-500">Official Apple Store</div>
-              <div className="mt-1">
-                <span className="text-xs align-top">৳</span>
-                <span className="text-xl font-bold">1,85,000</span>
-              </div>
-              <div className="text-xs text-gray-500 mb-2">Get it by Tomorrow</div>
-              <button className="w-full bg-amazon-yellow hover:bg-amazon-yellow_hover text-sm py-1.5 rounded-md shadow-sm font-medium border border-amazon-secondary transition-colors">
-                Add to Cart
-              </button>
-            </div>
-            {/* Product 2 */}
-            <div className="flex-none w-48">
-              <a href="details.html">
-                <div className="bg-gray-50 h-48 flex items-center justify-center mb-2 p-2">
-                  <img
-                    src="https://images.unsplash.com/photo-1591337676887-a217a6970a8a?w=300"
-                    className="h-full object-cover mix-blend-multiply"
-                  />
-                </div>
-                <div className="text-sm hover:text-amazon-orange text-amazon-blue line-clamp-2">
-                  iPhone 15 Pro Max - Blue Titanium
-                </div>
-              </a>
-              <div className="text-xs text-gray-500">Apple Bangladesh</div>
-              <div className="mt-1">
-                <span className="text-xs align-top">৳</span>
-                <span className="text-xl font-bold">1,45,000</span>
-              </div>
-              <div className="text-xs text-gray-500 mb-2">Get it by Tomorrow</div>
-              <button className="w-full bg-amazon-yellow hover:bg-amazon-yellow_hover text-sm py-1.5 rounded-md shadow-sm font-medium border border-amazon-secondary transition-colors">
-                Add to Cart
-              </button>
-            </div>
-            {/* Product 3 */}
-            <div className="flex-none w-48">
-              <a href="details.html">
-                <div className="bg-gray-50 h-48 flex items-center justify-center mb-2 p-2">
-                  <img
-                    src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300"
-                    className="h-full object-cover mix-blend-multiply"
-                  />
-                </div>
-                <div className="text-sm hover:text-amazon-orange text-amazon-blue line-clamp-2">
-                  Sony WH-1000XM5 Noise Canceling Headphones
-                </div>
-              </a>
-              <div className="text-xs text-gray-500">Sony Official</div>
-              <div className="mt-1">
-                <span className="text-xs align-top">৳</span>
-                <span className="text-xl font-bold">32,500</span>
-              </div>
-              <div className="text-xs text-gray-500 mb-2">Get it by Tomorrow</div>
-              <button className="w-full bg-amazon-yellow hover:bg-amazon-yellow_hover text-sm py-1.5 rounded-md shadow-sm font-medium border border-amazon-secondary transition-colors">
-                Add to Cart
-              </button>
-            </div>
-            {/* Product 4 */}
-            <div className="flex-none w-48">
-              <a href="details.html">
-                <div className="bg-gray-50 h-48 flex items-center justify-center mb-2 p-2">
-                  <img
-                    src="https://images.unsplash.com/photo-1675868374786-3edd36dddf04?w=300"
-                    className="h-full object-cover mix-blend-multiply"
-                  />
-                </div>
-                <div className="text-sm hover:text-amazon-orange text-amazon-blue line-clamp-2">
-                  Mechanical Gaming Keyboard RGB
-                </div>
-              </a>
-              <div className="text-xs text-gray-500">Razer Store</div>
-              <div className="mt-1">
-                <span className="text-xs align-top">৳</span>
-                <span className="text-xl font-bold">8,500</span>
-              </div>
-              <div className="text-xs text-gray-500 mb-2">Get it by Tomorrow</div>
-              <button className="w-full bg-amazon-yellow hover:bg-amazon-yellow_hover text-sm py-1.5 rounded-md shadow-sm font-medium border border-amazon-secondary transition-colors">
-                Add to Cart
-              </button>
-            </div>
-            {/* Product 5 */}
-            <div className="flex-none w-48">
-              <a href="details.html">
-                <div className="bg-gray-50 h-48 flex items-center justify-center mb-2 p-2">
-                  <img
-                    src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300"
-                    className="h-full object-cover mix-blend-multiply"
-                  />
-                </div>
-                <div className="text-sm hover:text-amazon-orange text-amazon-blue line-clamp-2">
-                  Logitech G502 Hero Gaming Mouse
-                </div>
-              </a>
-              <div className="text-xs text-gray-500">Logitech G</div>
-              <div className="mt-1">
-                <span className="text-xs align-top">৳</span>
-                <span className="text-xl font-bold">4,500</span>
-              </div>
-              <div className="text-xs text-gray-500 mb-2">Get it by Tomorrow</div>
-              <button className="w-full bg-amazon-yellow hover:bg-amazon-yellow_hover text-sm py-1.5 rounded-md shadow-sm font-medium border border-amazon-secondary transition-colors">
-                Add to Cart
-              </button>
-            </div>
+            {
+              products.map((product: Product) => (
+                <ProductCard key={product._id} product={product} />
+              ))
+            }
+
           </div>
         </div>
       </div>
