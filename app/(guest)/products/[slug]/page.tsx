@@ -1,3 +1,5 @@
+import { handleAddToCart } from "@/actions/add-to-cart"
+import { SubmitButton } from "@/components/common/submit-button"
 import { Description } from "@/components/products/description"
 import { ProductInfo } from "@/components/products/product-info"
 import { ImageGallery } from "@/components/products/product-info/image-gallery"
@@ -98,6 +100,7 @@ const ProductDetailPage = async ({ params }: Props) => {
       </div>
       {/* Right: Buy Box */}
       <div className="lg:col-span-3">
+
         <div className="border border-gray-200 rounded p-4">
           <div className="text-3xl text-amazon-orange mb-2">৳{product.price}</div>
           <p className="text-sm mb-3">
@@ -105,19 +108,20 @@ const ProductDetailPage = async ({ params }: Props) => {
             <strong>Tomorrow</strong>
           </p>
           <p className="text-green-600 font-bold text-sm mb-4">In Stock</p>
-          <div className="mb-4">
-            <label className="text-sm font-bold block mb-2">Quantity:</label>
-            <select className="border border-gray-300 rounded px-3 py-1 text-sm w-20">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-          </div>
-          <button className="w-full bg-amazon-yellow hover:bg-amazon-yellow_hover py-2 rounded-md shadow-sm mb-2 text-sm font-medium border border-amazon-secondary">
-            Add to Cart
-          </button>
+          <form action={handleAddToCart}>
+            <input type="hidden" name="productId" value={product._id} />
+            <div className="mb-4">
+              <label className="text-sm font-bold block mb-2">Quantity:</label>
+              <select name="quantity" className="border border-gray-300 rounded px-3 py-1 text-sm w-20">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+            <SubmitButton />
+          </form>
           <button className="w-full bg-amazon-secondary hover:bg-amazon-secondary_hover py-2 rounded-md shadow-sm text-sm font-medium text-white">
             Buy Now
           </button>

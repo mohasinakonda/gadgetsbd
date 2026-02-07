@@ -32,5 +32,6 @@ export type Product = {
   reviews: Review[]
   averageRating: number
   reviewCount: number
+  availability: string
 
 }

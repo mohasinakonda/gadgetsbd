@@ -8,7 +8,7 @@ import Link from "next/link";
 const getProducts = async () => {
   const response = await fetch(`${process.env.BASE_URL}/api/products`)
   const data = await response.json()
-  console.log(data)
+
   return data.data
 }
 export default async function Home() {

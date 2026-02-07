@@ -1,8 +1,12 @@
+import { CartProduct } from "@/app/(checkout)/checkout/page"
+import { getCart } from "@/app/(guest)/cart/page"
 import { Search, ShoppingCart } from "lucide-react"
 import Link from "next/link"
 
-export const GuestNavbar = () => {
-
+export const GuestNavbar = async () => {
+  const cart = await getCart()
+  const products = cart?.data?.products
+  const totalItems = products?.reduce((acc: number, product: CartProduct) => acc + product.quantity, 0)
   return <nav className="bg-amazon text-white">
     {/* Top Nav */}
     <div className="max-w-[1500px] mx-auto flex items-center p-2 gap-4">
@@ -54,7 +58,7 @@ export const GuestNavbar = () => {
         >
           <ShoppingCart className="w-8 h-8" />
           <span className="font-bold text-amazon-secondary absolute top-0 left-1/2 -translate-x-1/2 text-sm">
-            3
+            {totalItems}
           </span>
           <span className="font-bold text-sm hidden md:block">Cart</span>
         </Link>

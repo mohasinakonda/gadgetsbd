@@ -11,3 +11,13 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
     </div>
   </div>
 }
+
+export const ChangeAddressModal = ({ children }: { children: React.ReactNode }) => {
+
+  return <div popover="auto" id="address-modal" className="w-full h-full bg-gray-500/40  backdrop-blur">
+
+    <div className="max-w-lg mx-auto w-full h-full flex items-center justify-center  p-6 ">
+      {children}
+    </div>
+  </div>
+}
